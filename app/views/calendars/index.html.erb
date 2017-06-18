@@ -1,3 +1,15 @@
 <h1>Calendars Index Page</h1>
-<%= render @calendars %>
+<table>
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Trackable</td>
+      <td>Count</td>
+      <td>ical_link</td>
+    </th>
+  </thead>
+  <tbody>
+    <%= render @calendars %>
+  </tbody>
+</table>
 <div><%= link_to "Create calendar", new_calendar_path %></div>

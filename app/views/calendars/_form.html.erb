@@ -1,5 +1,15 @@
 <%= form_for @calendar do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :trackable %>
+    <%= f.check_box :trackable %>
+  </div>
+  <div>
+    <%= f.label :ical_link %>
+    <%= f.file_field :ical_link %>
+  </div>
   <%= f.submit %>
 <% end %>

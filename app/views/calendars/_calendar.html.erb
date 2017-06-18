@@ -1,1 +1,6 @@
-<div><%= link_to calendar.name, calendar %></div>
+<tr>
+  <td><%= link_to calendar.name, calendar %></td>
+  <td><%= calendar.trackable? %></td>
+  <td><%= calendar.count %></td>
+  <td><%= calendar.ical_link %></td>
+</tr>

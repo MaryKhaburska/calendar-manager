@@ -14,4 +14,6 @@ RSpec.describe Calendar, type: :model do
   # it { should validate_presence_of(:user_id) }
   it { should validate_presence_of(:name) }
   it { should be_valid }
+
+  it { should have_many(:events) }
 end

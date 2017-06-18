@@ -10,5 +10,6 @@ FactoryGirl.define do
     wholeday false
     repeat 1
     calendar_id 1
+    association :calendar, id: 1
   end
 end

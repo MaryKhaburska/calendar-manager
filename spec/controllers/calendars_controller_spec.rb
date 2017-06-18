@@ -58,4 +58,10 @@ RSpec.describe CalendarsController, type: :controller do
     before {get :show, params: {id: 1}}
     it { should render_template('show') }
   end
+
+  describe "DESTROY" do
+    before {delete :destroy, params: {id: 1}}
+    it { should redirect_to(calendars_path) }
+    expect(response).to change(Calendar, :count).by(-1)
+  end
 end

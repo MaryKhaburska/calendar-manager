@@ -36,7 +36,7 @@ class CalendarsController < ApplicationController
 
   def destroy
     @calendar.destroy
-    redirect_to calendar_index_url
+    redirect_to calendars_path
     flash[:notice] = "Calendar was successfully updated."
   end
 

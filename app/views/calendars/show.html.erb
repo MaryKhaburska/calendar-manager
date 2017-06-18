@@ -1,2 +1,6 @@
-<%= @calendar.name %>
-<%= link_to "Index", root_path %>
+<div><%= @calendar.name %></div>
+<div><%= @calendar.trackable? %></div>
+<div><%= @calendar.count %></div>
+<div><%= @calendar.ical_link %></div>
+<br>
+<%= link_to "Index", root_path %> | <%= link_to "Delete", @calendar, method: :delete %>

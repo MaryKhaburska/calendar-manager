@@ -20,4 +20,37 @@ RSpec.describe CalendarsController, type: :controller do
       expect(assigns(:calendars)).to match_array([@calendar])
     end
   end
+
+  describe "GET #new" do
+    it "responds successfully with an HTTP 200 and render form" do
+      get :new
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      expect(response).to render_template("new")
+    end
+  end
+
+  describe "POST #create" do
+    context "created successfully" do
+      before do
+        calendar_params = FactoryGirl.attributes_for :calendar
+        post :create, params: { calendar: {name: "name"} }
+      end
+
+      it "calendar is created" do
+        calendar_params = FactoryGirl.attributes_for :calendar
+        expect(response).to have_http_status(302)
+      end
+
+      it { should redirect_to(calendar_path(Calendar.find_by(name: "name"))) }
+    end
+
+    context "create with wrong params" do
+      it "params are invalid" do
+        calendar_params = {name: ""}
+        post :create, params: {calendar: {name: ""}}
+        expect(response).to render_template("new")
+      end
+    end
+  end
 end

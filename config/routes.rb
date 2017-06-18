@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :calendar
-  resources :event
+  resources :calendars
+  resources :events
 
-  root "calendar#index"
+  root "calendars#index"
 end

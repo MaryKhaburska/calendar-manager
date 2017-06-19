@@ -60,8 +60,9 @@ RSpec.describe CalendarsController, type: :controller do
   end
 
   describe "DESTROY" do
-    before {delete :destroy, params: {id: 1}}
-    it { should redirect_to(calendars_path) }
-    expect(response).to change(Calendar, :count).by(-1)
+    it "should destroy calendar" do
+      expect{delete :destroy, params: {id: 1}}.to change{Calendar.count}.by(-1)
+      expect(response).to redirect_to calendars_path
+    end
   end
 end

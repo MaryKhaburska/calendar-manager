@@ -30,6 +30,15 @@ RSpec.describe CalendarsController, type: :controller do
     end
   end
 
+  describe "GET #edit" do
+    it "responds successfully with an HTTP 200 and render edit tempale" do
+      get :edit, params: {id: 1}
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      expect(response).to render_template("edit")
+    end
+  end
+
   describe "POST #create" do
     context "created successfully" do
       before do
@@ -47,7 +56,6 @@ RSpec.describe CalendarsController, type: :controller do
 
     context "create with wrong params" do
       it "params are invalid" do
-        calendar_params = {name: ""}
         post :create, params: {calendar: {name: ""}}
         expect(response).to render_template("new")
       end
@@ -57,6 +65,20 @@ RSpec.describe CalendarsController, type: :controller do
   describe "GET #show" do
     before {get :show, params: {id: 1}}
     it { should render_template('show') }
+  end
+
+  describe "#update" do
+    let(:attr) do
+      {name: "new name"}
+    end
+
+    before(:each) do
+      put :update, params: {id: 1, calendar: {name: "new name"}}
+      @calendar.reload
+    end
+
+    it { expect(response).to redirect_to(@calendar) }
+    it { expect(@calendar.name).to eql(attr[:name]) }
   end
 
   describe "DESTROY" do

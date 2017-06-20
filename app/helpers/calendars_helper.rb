@@ -35,7 +35,7 @@ module CalendarsHelper
     calc_duration(event) == 1.day
   end
 
-  def event_parameters(e)
+  def get_event_params(e)
     {
       uuid:         e.uid,
       name:         e.summary,

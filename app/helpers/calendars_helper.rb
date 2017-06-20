@@ -21,16 +21,21 @@ module CalendarsHelper
   def calc_duration(event)
     if event.dtstart.instance_of?(Icalendar::Values::DateTime)
       event.dtend.to_i - event.dtstart.to_i
+    elsif event.dtstart.instance_of?(Icalendar::Values::Date)
+      de = DateTime.parse(event.dtend.to_s).to_i
+      ds = DateTime.parse(event.dtstart.to_s).to_i
+      de - ds
     else
-      1.day.to_i
+      raise ArgumentError.new("Date #{event.dtstart} is wrong.")
     end
   end
 
   def determine_wholeday(event)
-    event.dtstart.instance_of?(Icalendar::Values::Date)
+    event.dtstart.instance_of?(Icalendar::Values::Date) &&
+    calc_duration(event) == 1.day
   end
 
-  def make_event(e)
+  def event_parameters(e)
     {
       uuid:         e.uid,
       name:         e.summary,

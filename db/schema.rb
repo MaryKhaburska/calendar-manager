@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20170618100611) do
     t.integer "uuid"
     t.string "name"
     t.text "description"
-    t.datetime "duration"
+    t.integer "duration"
     t.string "location"
     t.datetime "start_date"
     t.datetime "end_date"

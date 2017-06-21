@@ -43,7 +43,9 @@ RSpec.describe CalendarsHelper, type: :helper do
     end
   end
 
-  describe "#event_parameters" do
-
+  describe "#parse_event_params" do
+    before { @ics_file = File.open("public/uploads/test_cal.ics") }
+    it { expect(parse_event_params(@ics_file)).to be_an_instance_of(Array) }
+    it { expect(parse_event_params(@ics_file).size).to eql(8) }
   end
 end

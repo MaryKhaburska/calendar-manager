@@ -41,15 +41,20 @@ module CalendarsHelper
 
   def get_event_params(e)
     {
-      uuid:         e.uid,
-      name:         e.summary,
-      description:  e.description,
-      location:     e.location,
+      uuid:         e.uid.to_s,
+      name:         e.summary.to_s,
+      description:  e.description.to_s,
+      location:     e.location.to_s,
       start_date:   e.dtstart,
       end_date:     e.dtend,
       duration:     calc_duration(e),
       wholeday:     determine_wholeday(e),
       repeat:       e.rrule
     }
+  end
+
+  def parse_event_params(event)
+    events = parse_ics(event)
+    events.map { |e| get_event_params(e)}
   end
 end

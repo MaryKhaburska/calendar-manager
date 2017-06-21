@@ -13,8 +13,12 @@ module CalendarsHelper
   # => wholeday = e.duration == 1 day
   # => repeat = if e.rrule.present?
   def parse_ics(file)
-    cal_file = File.open(file)
-    events = Icalendar::Event.parse(cal_file)
+    if file.instance_of?(IcalLinkUploader)
+      cal_file = File.open(file.file.file)
+    else
+      cal_file = File.open(file)
+    end
+      events = Icalendar::Event.parse(cal_file)
   end
 
   # returns duration in seconds

@@ -12,6 +12,13 @@ RSpec.describe CalendarsHelper, type: :helper do
         helper.parse_ics(ics_file).first
       ).to be_an_instance_of(Icalendar::Event)
     end
+
+    it "parse instance_of(IcalLinkUploader)" do
+      calendar = FactoryGirl.create(:calendar)
+      expect(
+        helper.parse_ics(calendar.ical_link).first
+      ).to be_an_instance_of(Icalendar::Event)
+    end
   end
 
   describe "#calc_duration" do

@@ -51,6 +51,10 @@ RSpec.describe CalendarsController, type: :controller do
         expect(response).to have_http_status(302)
       end
 
+      # it "create events" do
+      #   expect(@calendar.reload.events.size).to eq(9)
+      # end
+
       it { should redirect_to(calendar_path(Calendar.find_by(name: "name"))) }
     end
 

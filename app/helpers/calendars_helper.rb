@@ -1,5 +1,5 @@
 module CalendarsHelper
-  include Icalendar
+  require 'icalendar'
 
   # Argument is path to ics file
   # returns events in Icalendar format
@@ -12,9 +12,11 @@ module CalendarsHelper
   # => end_date = e.dtend
   # => wholeday = e.duration == 1 day
   # => repeat = if e.rrule.present?
-  def parse_ics(file)
+  def parse_file(file)
     if file.instance_of?(IcalLinkUploader)
       cal_file = File.open(file.file.file)
+    elsif file.instance_of?(File)
+      cal_file = File.open(file.path)
     else
       cal_file = File.open(file)
     end
@@ -47,14 +49,14 @@ module CalendarsHelper
       location:     e.location.to_s,
       start_date:   e.dtstart,
       end_date:     e.dtend,
-      duration:     calc_duration(e),
+      duration:     calc_duration(e).to_s,
       wholeday:     determine_wholeday(e),
       repeat:       e.rrule
     }
   end
 
-  def parse_event_params(event)
-    events = parse_ics(event)
+  def parse_ics(event)
+    events = parse_file(event)
     events.map { |e| get_event_params(e)}
   end
 end

@@ -8,7 +8,7 @@ FactoryGirl.define do
     start_date "2017-06-18 13:06:11"
     end_date "2017-06-18 13:06:11"
     wholeday false
-    repeat 1
+    repeat []
     calendar_id 1
     association :calendar, id: 1
   end

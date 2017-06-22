@@ -5,18 +5,18 @@ RSpec.describe CalendarsHelper, type: :helper do
     @event = Icalendar::Event.new
   end
 
-  describe "#parse_ics" do
+  describe "#parse_file" do
     it "return Icalendar::Event events" do
       ics_file = File.open("public/uploads/test_cal.ics")
       expect(
-        helper.parse_ics(ics_file).first
+        helper.parse_file(ics_file).first
       ).to be_an_instance_of(Icalendar::Event)
     end
 
     it "parse instance_of(IcalLinkUploader)" do
       calendar = FactoryGirl.create(:calendar)
       expect(
-        helper.parse_ics(calendar.ical_link).first
+        helper.parse_file(calendar.ical_link).first
       ).to be_an_instance_of(Icalendar::Event)
     end
   end
@@ -43,9 +43,9 @@ RSpec.describe CalendarsHelper, type: :helper do
     end
   end
 
-  describe "#parse_event_params" do
+  describe "#parse_ics" do
     before { @ics_file = File.open("public/uploads/test_cal.ics") }
-    it { expect(parse_event_params(@ics_file)).to be_an_instance_of(Array) }
-    it { expect(parse_event_params(@ics_file).size).to eql(8) }
+    it { expect(parse_ics(@ics_file)).to be_an_instance_of(Array) }
+    it { expect(parse_ics(@ics_file).size).to eql(8) }
   end
 end

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe CalendarsController, type: :controller do
+  before { @calendar = FactoryGirl.create(:calendar) }
+
   describe "GET #index" do
     it "responds successfully with an HTTP 200 status code" do
       get :index
@@ -20,15 +22,6 @@ RSpec.describe CalendarsController, type: :controller do
       expect(response).to be_success
       expect(response).to have_http_status(200)
       expect(response).to render_template("new")
-    end
-  end
-
-  describe "GET #edit" do
-    it "responds successfully with an HTTP 200 and render edit tempale" do
-      get :edit, params: {id: 1}
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
-      expect(response).to render_template("edit")
     end
   end
 
@@ -64,8 +57,16 @@ RSpec.describe CalendarsController, type: :controller do
     it { should render_template('show') }
   end
 
+  describe "GET #edit" do
+    it "responds successfully with an HTTP 200 and render edit tempale" do
+      get :edit, params: {id: 1}
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      expect(response).to render_template("edit")
+    end
+  end
+
   describe "PUT #update" do
-    before { @calendar = Calendar.last }
 
     before(:each) do
       put :update, params: {id: @calendar.id, calendar: {name: "new name"}}

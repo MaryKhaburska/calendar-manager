@@ -37,10 +37,6 @@ RSpec.describe CalendarsController, type: :controller do
         expect{post :create, params: attr}.to change{Calendar.all.size}.by(1)
       end
 
-      it "create events" do
-        expect(Calendar.last.count).to eq(8)
-      end
-
       it { should redirect_to(calendar_path(Calendar.last)) }
     end
 
@@ -49,6 +45,14 @@ RSpec.describe CalendarsController, type: :controller do
         post :create, params: {calendar: {name: ""}}
         expect(response).to render_template("new")
       end
+    end
+
+    context "create events" do
+      before do
+        post :create, params: {calendar: {name: "name", ical_link: File.open("public/uploads/test_cal.ics")}}
+      end
+      it { expect(Calendar.last.events.size).to eq(8) }
+      it { expect(Calendar.last.count).to eq(8) }
     end
   end
 

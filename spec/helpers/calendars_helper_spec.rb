@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CalendarsHelper, type: :helper do
-  before(:each) do
+  before do
     @event = Icalendar::Event.new
   end
 

@@ -16,7 +16,7 @@ module CalendarsHelper
     if file.instance_of?(IcalLinkUploader)
       cal_file = File.open(file.file.file)
     elsif file.instance_of?(File)
-      cal_file = File.open(file.path)
+      cal_file = file
     else
       cal_file = File.open(file)
     end

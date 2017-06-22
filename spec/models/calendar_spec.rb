@@ -16,19 +16,4 @@ RSpec.describe Calendar, type: :model do
   it { should be_valid }
 
   it { should have_many(:events) }
-
-  describe "#create_events" do
-    before do
-      @calendar.save
-      @calendar.send(:create_events)
-    end
-
-    it "creates 8 events" do
-      expect(@calendar.events.size).to eq(8)
-    end
-
-    it "@calendar.count == @calendar.events.size" do
-      expect(@calendar.count).to eq(@calendar.events.size)
-    end
-  end
 end

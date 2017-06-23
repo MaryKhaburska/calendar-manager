@@ -46,14 +46,6 @@ RSpec.describe CalendarsController, type: :controller do
         expect(response).to render_template("new")
       end
     end
-
-    context "create events" do
-      before do
-        post :create, params: {calendar: {name: "name", ical_link: File.open("public/uploads/test_cal.ics")}}
-      end
-      it { expect(Calendar.last.events.size).to eq(8) }
-      it { expect(Calendar.last.count).to eq(8) }
-    end
   end
 
   describe "GET #show" do
@@ -86,5 +78,13 @@ RSpec.describe CalendarsController, type: :controller do
       expect{delete :destroy, params: {id: 1}}.to change{Calendar.count}.by(-1)
       expect(response).to redirect_to calendars_path
     end
+  end
+
+  describe "#create_events" do
+    before { get :create_events, params: {id: @calendar.id} }
+    it { expect(@calendar.ical_link).to be_a(IcalLinkUploader) }
+    it { expect(@calendar.events.size).to eq(8) }
+    it { expect(@calendar.reload.count).to eq(8) }
+    it { should redirect_to @calendar }
   end
 end

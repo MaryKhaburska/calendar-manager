@@ -1,6 +1,7 @@
 class CalendarsController < ApplicationController
   include CalendarsHelper
-  before_action :set_calendar, only: [:show, :edit, :update, :destroy]
+  before_action :set_calendar,
+    only: [:show, :edit, :update, :destroy, :create_events]
 
   def index
     @calendars = Calendar.all
@@ -19,7 +20,6 @@ class CalendarsController < ApplicationController
   def create
     @calendar = Calendar.new(calendar_params)
     if @calendar.save
-      create_events if calendar_params[:ical_link].present?
       redirect_to @calendar
       flash[:notice] = "Calendar was successfully created."
     else
@@ -42,6 +42,16 @@ class CalendarsController < ApplicationController
     flash[:notice] = "Calendar was successfully deleted."
   end
 
+  def create_events
+    file = @calendar.ical_link
+    parsed_events = parse_ics(file)
+    parsed_events.map do |e|
+      @calendar.events.create!(e) unless Event.where(uuid: e[:uuid]).present?
+    end
+    @calendar.update_attributes!(count: @calendar.events.size)
+    redirect_to @calendar
+  end
+
   private
     def set_calendar
       @calendar = Calendar.find(params[:id])
@@ -52,14 +62,5 @@ class CalendarsController < ApplicationController
         .require(:calendar)
         .permit(:name, :trackable, :count, :ical_link,
                 :user_id, :plan_id)
-    end
-
-    def create_events
-      file = File.open("public/uploads/test_cal.ics")
-      parsed_events = parse_ics(file)
-      parsed_events.map do |e|
-        @calendar.events.create(e) unless Event.where(uuid: e[:uuid]).present?
-      end
-      actualize_count(@calendar)
     end
 end

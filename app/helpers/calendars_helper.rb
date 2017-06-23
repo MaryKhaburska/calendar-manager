@@ -61,6 +61,6 @@ module CalendarsHelper
   end
 
   def actualize_count(calendar)
-    calendar.update_attributes(count: calendar.events.size)
+    calendar.update_attributes!(count: calendar.events.size)
   end
 end

@@ -1,6 +1,29 @@
-<div><%= @calendar.name %></div>
-<div><%= @calendar.trackable? %></div>
-<div><%= @calendar.count %></div>
-<div><%= @calendar.ical_link %></div>
-<br>
-<%= link_to "Index", root_path %> | <%= link_to "Delete", @calendar, method: :delete %>
+<h1>Calendar Show Page</h1>
+<table>
+  <tr>
+    <td>Name: </td>
+    <td><%= @calendar.name %></td>
+  </tr>
+  <tr>
+    <td>Trackable: </td>
+    <td><%= @calendar.trackable %></td>
+  </tr>
+  <tr>
+    <td>Count: </td>
+    <td><%= @calendar.count %></td>
+  </tr>
+  <tr>
+    <td>Count: </td>
+    <td><%= @calendar.ical_link %></td>
+  </tr>
+</table>
+
+<%= link_to "Index", root_path %> |
+<%= link_to "Delete", @calendar, method: :delete %> |
+<%= link_to "Create Events", create_events_calendar_path(@calendar) %>
+
+<ul>
+  <% @calendar.events.map do |e| %>
+    <li><%= e.name %>: <%= e.uuid %></li>
+  <% end %>
+</ul>

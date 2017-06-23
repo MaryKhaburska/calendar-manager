@@ -46,7 +46,8 @@ class CalendarsController < ApplicationController
     file = @calendar.ical_link
     parsed_events = parse_ics(file)
     parsed_events.map do |e|
-      @calendar.events.create!(e) unless Event.where(uuid: e[:uuid]).present?
+      @calendar.events.create!(e) unless Event.where(calendar_id: @calendar.id)
+                                              .where(uuid: e[:uuid]).present?
     end
     @calendar.update_attributes!(count: @calendar.events.size)
     redirect_to @calendar

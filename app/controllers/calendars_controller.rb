@@ -60,6 +60,6 @@ class CalendarsController < ApplicationController
       parsed_events.map do |e|
         @calendar.events.create(e) unless Event.where(uuid: e[:uuid]).present?
       end
-      @calendar.count = @calendar.events.size
+      actualize_count(@calendar)
     end
 end

@@ -59,4 +59,8 @@ module CalendarsHelper
     events = parse_file(event)
     events.map { |e| get_event_params(e)}
   end
+
+  def actualize_count(calendar)
+    calendar.update_attributes(count: calendar.events.size)
+  end
 end
